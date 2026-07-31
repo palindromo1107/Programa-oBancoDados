@@ -1,6 +1,6 @@
 -- F1 Quantidade de usuários cadastrados
 
-CREATE OR REPLACE FUNCTION quantidade_usuarios()
+CREATE FUNCTION quantidade_usuarios()
 
 RETURNS INTEGER
 
@@ -27,7 +27,7 @@ $$;
 
 -- F2 Valor total de um pedido
 
-CREATE OR REPLACE FUNCTION calcular_total_pedido(
+CREATE FUNCTION calcular_total_pedido(
 
     pedido_id INTEGER
 
@@ -66,7 +66,7 @@ $$;
 
 -- F3 Verifica se um produto existe
 
-CREATE OR REPLACE FUNCTION produto_existe(
+CREATE FUNCTION produto_existe(
 
     produto INTEGER
 
@@ -98,7 +98,7 @@ $$;
 
 -- F4 Lista todos os produtos
 
-CREATE OR REPLACE FUNCTION listar_produtos()
+CREATE FUNCTION listar_produtos()
 
 RETURNS TABLE(
 
@@ -145,7 +145,7 @@ $$;
 
 -- F5 Lista todos os pedidos de um usuário
 
-CREATE OR REPLACE FUNCTION listar_pedidos_usuario(
+CREATE FUNCTION listar_pedidos_usuario(
 
     usuario INTEGER
 
