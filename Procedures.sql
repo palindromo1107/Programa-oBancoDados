@@ -1,44 +1,12 @@
-/*
-=========================================================
-PROJETO: LOJA VIRTUAL
-Disciplina: Banco de Dados
-SGBD: PostgreSQL
-Arquivo: 04_procedures.sql
-=========================================================
-*/
+-- P1 CADASTRAR PRODUTO
 
-----------------------------------------------------------
--- REMOVE AS PROCEDURES CASO EXISTAM
-----------------------------------------------------------
-
-DROP PROCEDURE IF EXISTS cadastrar_produto(
-VARCHAR,NUMERIC,VARCHAR,INTEGER,INTEGER,INTEGER);
-
-DROP PROCEDURE IF EXISTS realizar_pedido(
-INTEGER,INTEGER,INTEGER);
-
-DROP PROCEDURE IF EXISTS alterar_preco_produto(
-INTEGER,NUMERIC);
-
-DROP PROCEDURE IF EXISTS excluir_usuario(
-INTEGER);
-
-
-
-/*========================================================
- PROCEDURE 1
- CADASTRAR PRODUTO
-========================================================*/
-
-CREATE OR REPLACE PROCEDURE cadastrar_produto(
-
+CREATE PROCEDURE cadastrar_produto(
     IN nome VARCHAR,
     IN preco NUMERIC,
     IN codigo VARCHAR,
     IN garantia INTEGER,
     IN estoque INTEGER,
     IN administrador INTEGER
-
 )
 
 LANGUAGE plpgsql
@@ -112,14 +80,9 @@ END;
 
 $$;
 
+-- P2 FAZER PEDIDO
 
-
-/*========================================================
- PROCEDURE 2
- REALIZAR PEDIDO
-========================================================*/
-
-CREATE OR REPLACE PROCEDURE realizar_pedido(
+CREATE PROCEDURE realizar_pedido(
 
     IN usuario INTEGER,
     IN produto INTEGER,
@@ -212,15 +175,9 @@ END;
 
 $$;
 
+-- P3 ALTERAR PREÇO
 
-
-
-/*========================================================
- PROCEDURE 3
- ALTERAR PREÇO
-========================================================*/
-
-CREATE OR REPLACE PROCEDURE alterar_preco_produto(
+CREATE PROCEDURE alterar_preco_produto(
 
     IN produto INTEGER,
     IN novo_preco NUMERIC
@@ -265,16 +222,9 @@ END;
 
 $$;
 
+-- P4 EXCLUIR USUÁRIO
 
-
-
-
-/*========================================================
- PROCEDURE 4
- EXCLUIR USUÁRIO
-========================================================*/
-
-CREATE OR REPLACE PROCEDURE excluir_usuario(
+CREATE PROCEDURE excluir_usuario(
 
     IN usuario INTEGER
 
@@ -326,43 +276,37 @@ END;
 
 $$;
 
+-- TESTES
 
-
-----------------------------------------------------------
--- TESTES DAS PROCEDURES
-----------------------------------------------------------
-
+-- P1
 CALL cadastrar_produto(
-
-'SSD Kingston 1TB',
-499.90,
-'SSD100',
-36,
-25,
-1
-
+ 'SSD Kingston 1TB',
+ 499.90,
+ 'SSD100',
+ 36,
+ 25,
+ 1
 );
 
+-- P2
+CALL realizar_pedido(1, 2, 3);
 
-CALL realizar_pedido(
+-- P3
+CALL alterar_preco_produto(2, 210.00);
 
-1,
-2,
-3
-
-);
-
-
-CALL alterar_preco_produto(
-
-2,
-210.00
-
-);
+-- P4
+CALL excluir_usuario(5);
 
 
-CALL excluir_usuario(
 
-5
+DROP PROCEDURE IF EXISTS cadastrar_produto(
+VARCHAR,NUMERIC,VARCHAR,INTEGER,INTEGER,INTEGER);
 
-);
+DROP PROCEDURE IF EXISTS realizar_pedido(
+INTEGER,INTEGER,INTEGER);
+
+DROP PROCEDURE IF EXISTS alterar_preco_produto(
+INTEGER,NUMERIC);
+
+DROP PROCEDURE IF EXISTS excluir_usuario(
+INTEGER);
