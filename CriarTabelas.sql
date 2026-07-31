@@ -1,36 +1,6 @@
-/*
-=========================================================
-PROJETO: LOJA VIRTUAL
-Disciplina: Banco de Dados
-SGBD: PostgreSQL
-Arquivo: 01_criar_tabelas.sql
-=========================================================
-*/
-
--- ==========================================
--- CRIAÇÃO DO BANCO
--- ==========================================
-
 CREATE DATABASE loja_virtual;
 
--- Conecte ao banco antes de executar o restante.
--- \c loja_virtual
-
-
--- ==========================================
--- REMOÇÃO DAS TABELAS (caso existam)
--- ==========================================
-
-DROP TABLE IF EXISTS contact CASCADE;
-DROP TABLE IF EXISTS orders CASCADE;
-DROP TABLE IF EXISTS product CASCADE;
-DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS admin CASCADE;
-
-
--- ==========================================
 -- TABELA ADMIN
--- ==========================================
 
 CREATE TABLE admin (
 
@@ -46,10 +16,7 @@ CREATE TABLE admin (
 
 );
 
-
--- ==========================================
 -- TABELA USUÁRIOS
--- ==========================================
 
 CREATE TABLE users (
 
@@ -66,9 +33,7 @@ CREATE TABLE users (
 );
 
 
--- ==========================================
 -- TABELA PRODUTOS
--- ==========================================
 
 CREATE TABLE product (
 
@@ -105,10 +70,7 @@ CREATE TABLE product (
 
 );
 
-
--- ==========================================
 -- TABELA PEDIDOS
--- ==========================================
 
 CREATE TABLE orders (
 
@@ -150,10 +112,7 @@ CREATE TABLE orders (
 
 );
 
-
--- ==========================================
 -- TABELA CONTATOS
--- ==========================================
 
 CREATE TABLE contact (
 
@@ -183,10 +142,7 @@ CREATE TABLE contact (
 
 );
 
-
--- ==========================================
 -- ÍNDICES
--- ==========================================
 
 CREATE INDEX idx_produto_nome
 ON product(p_name);
@@ -201,36 +157,15 @@ CREATE INDEX idx_contato_email
 ON contact(c_email);
 
 
--- ==========================================
--- COMENTÁRIOS
--- ==========================================
-
-COMMENT ON TABLE admin IS
-'Administradores responsáveis pelo gerenciamento da loja.';
-
-COMMENT ON TABLE users IS
-'Clientes cadastrados na loja virtual.';
-
-COMMENT ON TABLE product IS
-'Produtos disponíveis para venda.';
-
-COMMENT ON TABLE orders IS
-'Pedidos realizados pelos clientes.';
-
-COMMENT ON TABLE contact IS
-'Mensagens enviadas pelos clientes através do formulário de contato.';
-
-COMMENT ON COLUMN product.p_stock IS
-'Quantidade disponível em estoque.';
-
-COMMENT ON COLUMN orders.or_total IS
-'Valor total do pedido. Será atualizado automaticamente por Trigger.';
-
-
--- ==========================================
--- VERIFICAÇÃO
--- ==========================================
 
 SELECT table_name
 FROM information_schema.tables
 WHERE table_schema='public';
+
+
+
+DROP TABLE IF EXISTS contact CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS product CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS admin CASCADE;
