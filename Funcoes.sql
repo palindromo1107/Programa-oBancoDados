@@ -1,27 +1,4 @@
-/*
-=========================================================
-PROJETO: LOJA VIRTUAL
-Disciplina: Banco de Dados
-SGBD: PostgreSQL
-Arquivo: 03_funcoes.sql
-=========================================================
-*/
-
--- =====================================================
--- REMOVE AS FUNÇÕES CASO JÁ EXISTAM
--- =====================================================
-
-DROP FUNCTION IF EXISTS quantidade_usuarios();
-DROP FUNCTION IF EXISTS calcular_total_pedido(INTEGER);
-DROP FUNCTION IF EXISTS produto_existe(INTEGER);
-DROP FUNCTION IF EXISTS listar_produtos();
-DROP FUNCTION IF EXISTS listar_pedidos_usuario(INTEGER);
-
-----------------------------------------------------------
--- FUNÇÃO 1
--- Retorna a quantidade de usuários cadastrados
--- Retorno: INTEGER
-----------------------------------------------------------
+-- F1 Quantidade de usuários cadastrados
 
 CREATE OR REPLACE FUNCTION quantidade_usuarios()
 
@@ -48,19 +25,7 @@ END;
 
 $$;
 
-
-----------------------------------------------------------
--- TESTE
-----------------------------------------------------------
-
-SELECT quantidade_usuarios();
-
-
-----------------------------------------------------------
--- FUNÇÃO 2
--- Calcula o valor total de um pedido
--- Retorno: NUMERIC
-----------------------------------------------------------
+-- F2 Valor total de um pedido
 
 CREATE OR REPLACE FUNCTION calcular_total_pedido(
 
@@ -99,19 +64,7 @@ END;
 
 $$;
 
-
-----------------------------------------------------------
--- TESTE
-----------------------------------------------------------
-
-SELECT calcular_total_pedido(1);
-
-
-----------------------------------------------------------
--- FUNÇÃO 3
--- Verifica se um produto existe
--- Retorno: BOOLEAN
-----------------------------------------------------------
+-- F3 Verifica se um produto existe
 
 CREATE OR REPLACE FUNCTION produto_existe(
 
@@ -143,20 +96,7 @@ END;
 $$;
 
 
-----------------------------------------------------------
--- TESTE
-----------------------------------------------------------
-
-SELECT produto_existe(1);
-
-SELECT produto_existe(99);
-
-
-----------------------------------------------------------
--- FUNÇÃO 4
--- Lista todos os produtos
--- Retorno: TABLE
-----------------------------------------------------------
+-- F4 Lista todos os produtos
 
 CREATE OR REPLACE FUNCTION listar_produtos()
 
@@ -203,20 +143,7 @@ END;
 
 $$;
 
-
-----------------------------------------------------------
--- TESTE
-----------------------------------------------------------
-
-SELECT *
-FROM listar_produtos();
-
-
-----------------------------------------------------------
--- FUNÇÃO 5
--- Lista todos os pedidos de um usuário
--- Retorno: TABLE
-----------------------------------------------------------
+-- F5 Lista todos os pedidos de um usuário
 
 CREATE OR REPLACE FUNCTION listar_pedidos_usuario(
 
@@ -274,29 +201,39 @@ END;
 $$;
 
 
-----------------------------------------------------------
--- TESTE
-----------------------------------------------------------
+-- TESTES
 
 SELECT *
 FROM listar_pedidos_usuario(1);
 
-
-
-----------------------------------------------------------
--- CONSULTAS DE TESTE
-----------------------------------------------------------
+-- F1
 
 SELECT quantidade_usuarios();
 
+-- F2
+
 SELECT calcular_total_pedido(3);
 
-SELECT produto_existe(2);
+-- F3
 
-SELECT produto_existe(50);
+SELECT produto_existe(1);
+
+SELECT produto_existe(99);
+
+-- F4
 
 SELECT *
 FROM listar_produtos();
 
+-- F5
+
 SELECT *
 FROM listar_pedidos_usuario(2);
+
+
+
+DROP FUNCTION IF EXISTS quantidade_usuarios();
+DROP FUNCTION IF EXISTS calcular_total_pedido(INTEGER);
+DROP FUNCTION IF EXISTS produto_existe(INTEGER);
+DROP FUNCTION IF EXISTS listar_produtos();
+DROP FUNCTION IF EXISTS listar_pedidos_usuario(INTEGER);
