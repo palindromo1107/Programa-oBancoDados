@@ -1,32 +1,6 @@
-/*
-=========================================================
-PROJETO: LOJA VIRTUAL
-Disciplina: Banco de Dados
-SGBD: PostgreSQL
-Arquivo: 05_triggers.sql
-=========================================================
-*/
-
-----------------------------------------------------------
--- REMOVE TRIGGERS E FUNÇÕES CASO EXISTAM
-----------------------------------------------------------
-
-DROP TRIGGER IF EXISTS trg_auditoria_produto ON product;
-DROP TRIGGER IF EXISTS trg_impedir_exclusao_usuario ON users;
-DROP TRIGGER IF EXISTS trg_atualizar_total_pedido ON orders;
-DROP TRIGGER IF EXISTS trg_validar_produto ON product;
-
-DROP FUNCTION IF EXISTS fn_auditoria_produto();
-DROP FUNCTION IF EXISTS fn_impedir_exclusao_usuario();
-DROP FUNCTION IF EXISTS fn_atualizar_total_pedido();
-DROP FUNCTION IF EXISTS fn_validar_produto();
-
-
-----------------------------------------------------------
 -- TABELA DE AUDITORIA
-----------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS audit_product(
+CREATE TABLE audit_product(
 
     audit_id SERIAL PRIMARY KEY,
 
@@ -42,12 +16,9 @@ CREATE TABLE IF NOT EXISTS audit_product(
 
 );
 
-----------------------------------------------------------
--- TRIGGER 1
--- REGISTRAR INSERÇÃO DE PRODUTOS
-----------------------------------------------------------
+-- T1 REGISTRAR INSERÇÃO DE PRODUTOS
 
-CREATE OR REPLACE FUNCTION fn_auditoria_produto()
+CREATE FUNCTION fn_auditoria_produto()
 
 RETURNS TRIGGER
 
@@ -93,14 +64,9 @@ FOR EACH ROW
 
 EXECUTE FUNCTION fn_auditoria_produto();
 
+-- T2 IMPEDIR EXCLUSÃO DE USUÁRIO COM PEDIDOS
 
-
-----------------------------------------------------------
--- TRIGGER 2
--- IMPEDIR EXCLUSÃO DE USUÁRIO COM PEDIDOS
-----------------------------------------------------------
-
-CREATE OR REPLACE FUNCTION fn_impedir_exclusao_usuario()
+CREATE FUNCTION fn_impedir_exclusao_usuario()
 
 RETURNS TRIGGER
 
@@ -148,12 +114,7 @@ FOR EACH ROW
 
 EXECUTE FUNCTION fn_impedir_exclusao_usuario();
 
-
-
-----------------------------------------------------------
--- TRIGGER 3
--- ATUALIZA AUTOMATICAMENTE O VALOR TOTAL DO PEDIDO
-----------------------------------------------------------
+-- T3 ATUALIZA AUTOMATICAMENTE O VALOR TOTAL DO PEDIDO
 
 CREATE OR REPLACE FUNCTION fn_atualizar_total_pedido()
 
@@ -197,14 +158,9 @@ FOR EACH ROW
 
 EXECUTE FUNCTION fn_atualizar_total_pedido();
 
+-- T4 VALIDAR PREÇO E ESTOQUE DO PRODUTO
 
-
-----------------------------------------------------------
--- TRIGGER 4
--- VALIDAR PREÇO E ESTOQUE DO PRODUTO
-----------------------------------------------------------
-
-CREATE OR REPLACE FUNCTION fn_validar_produto()
+CREATE FUNCTION fn_validar_produto()
 
 RETURNS TRIGGER
 
@@ -256,19 +212,13 @@ FOR EACH ROW
 
 EXECUTE FUNCTION fn_validar_produto();
 
-
-
-----------------------------------------------------------
--- CONSULTAS DE TESTE
-----------------------------------------------------------
+-- TESTES
 
 -- Verificar auditoria
 
 SELECT *
 
 FROM audit_product;
-
-
 
 -- Inserção que gera auditoria
 
@@ -301,8 +251,6 @@ CURRENT_DATE,
 1
 
 );
-
-
 
 -- Atualização automática do total
 
@@ -338,11 +286,8 @@ FROM orders
 
 ORDER BY or_id DESC;
 
+-- Validar
 
-
--- Teste de validação
-
-/*
 INSERT INTO product(
 
 p_name,
@@ -374,12 +319,20 @@ CURRENT_DATE,
 );
 */
 
+-- Excluir
 
-
--- Teste de exclusão
-
-/*
 DELETE FROM users
 
 WHERE us_id = 1;
-*/
+
+
+
+DROP TRIGGER IF EXISTS trg_auditoria_produto ON product;
+DROP TRIGGER IF EXISTS trg_impedir_exclusao_usuario ON users;
+DROP TRIGGER IF EXISTS trg_atualizar_total_pedido ON orders;
+DROP TRIGGER IF EXISTS trg_validar_produto ON product;
+
+DROP FUNCTION IF EXISTS fn_auditoria_produto();
+DROP FUNCTION IF EXISTS fn_impedir_exclusao_usuario();
+DROP FUNCTION IF EXISTS fn_atualizar_total_pedido();
+DROP FUNCTION IF EXISTS fn_validar_produto();
