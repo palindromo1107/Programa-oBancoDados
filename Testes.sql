@@ -1,156 +1,48 @@
-/*
-=========================================================
-PROJETO: LOJA VIRTUAL
-Disciplina: Banco de Dados
-SGBD: PostgreSQL
-Arquivo: 06_testes.sql
-=========================================================
-*/
-
-
-/*========================================================
-        VERIFICAÇÃO DOS DADOS CADASTRADOS
-========================================================*/
-
-SELECT * FROM admin;
-
-SELECT * FROM users;
-
-SELECT * FROM product;
-
-SELECT * FROM orders;
-
-SELECT * FROM contact;
-
-
-
-/*========================================================
-                TESTES DAS FUNÇÕES
-========================================================*/
-
-----------------------------------------------------------
 -- Quantidade de usuários
-----------------------------------------------------------
 
 SELECT quantidade_usuarios();
 
+-- FUNÇOES
 
-
-----------------------------------------------------------
 -- Total de um pedido
-----------------------------------------------------------
 
 SELECT calcular_total_pedido(1);
 
 SELECT calcular_total_pedido(3);
 
-
-
-----------------------------------------------------------
 -- Produto existe?
-----------------------------------------------------------
 
 SELECT produto_existe(1);
 
 SELECT produto_existe(50);
 
-
-
-----------------------------------------------------------
 -- Listagem de produtos
-----------------------------------------------------------
 
-SELECT *
+SELECT * FROM listar_produtos();
 
-FROM listar_produtos();
-
-
-
-----------------------------------------------------------
 -- Pedidos de um usuário
-----------------------------------------------------------
 
-SELECT *
+SELECT * FROM listar_pedidos_usuario(1);
 
-FROM listar_pedidos_usuario(1);
+SELECT * FROM listar_pedidos_usuario(2);
 
-SELECT *
+-- PROCEDURES
 
-FROM listar_pedidos_usuario(2);
-
-
-
-/*========================================================
-            TESTES DAS PROCEDURES
-========================================================*/
-
-----------------------------------------------------------
 -- Cadastro de produto
-----------------------------------------------------------
 
-CALL cadastrar_produto(
+CALL cadastrar_produto( 'Mouse Sem Fio Logitech', 149.90, 'LOG900', 24, 40, 1 );
 
-'Mouse Sem Fio Logitech',
+SELECT * FROM product ORDER BY p_id DESC;
 
-149.90,
-
-'LOG900',
-
-24,
-
-40,
-
-1
-
-);
-
-SELECT *
-
-FROM product
-
-ORDER BY p_id DESC;
-
-
-
-----------------------------------------------------------
 -- Alterar preço
-----------------------------------------------------------
 
-CALL alterar_preco_produto(
+CALL alterar_preco_produto( 2, 199.90 );
 
-2,
+SELECT p_id, p_name,p_price FROM product WHERE p_id = 2;
 
-199.90
-
-);
-
-SELECT
-
-p_id,
-
-p_name,
-
-p_price
-
-FROM product
-
-WHERE p_id = 2;
-
-
-
-----------------------------------------------------------
 -- Realizar pedido
-----------------------------------------------------------
 
-CALL realizar_pedido(
-
-1,
-
-2,
-
-3
-
-);
+CALL realizar_pedido( 1, 2, 3 );
 
 SELECT *
 
@@ -168,11 +60,7 @@ FROM product
 
 WHERE p_id = 2;
 
-
-
-----------------------------------------------------------
 -- Excluir usuário sem pedidos
-----------------------------------------------------------
 
 INSERT INTO users(
 
@@ -212,15 +100,9 @@ CALL excluir_usuario(
 
 );
 
+-- TRIGGERS
 
-
-/*========================================================
-            TESTES DOS TRIGGERS
-========================================================*/
-
-----------------------------------------------------------
 -- Trigger de auditoria
-----------------------------------------------------------
 
 INSERT INTO product(
 
@@ -264,11 +146,7 @@ FROM audit_product
 
 ORDER BY audit_id DESC;
 
-
-
-----------------------------------------------------------
 -- Trigger de atualização automática
-----------------------------------------------------------
 
 INSERT INTO orders(
 
@@ -306,15 +184,10 @@ FROM orders
 
 ORDER BY or_id DESC;
 
-
-
-----------------------------------------------------------
 -- Trigger de validação
-----------------------------------------------------------
 
--- Deve gerar erro
+-- erro
 
-/*
 INSERT INTO product(
 
 p_name,
@@ -352,126 +225,8 @@ CURRENT_DATE,
 );
 */
 
-
-
-----------------------------------------------------------
 -- Trigger impedir exclusão
-----------------------------------------------------------
 
--- Deve gerar erro
-
-/*
-DELETE FROM users
-
-WHERE us_id = 1;
-*/
-
-
-
-/*========================================================
-            CONSULTAS FINAIS
-========================================================*/
-
-----------------------------------------------------------
--- Produtos cadastrados
-----------------------------------------------------------
-
-SELECT *
-
-FROM product;
-
-
-
-----------------------------------------------------------
--- Pedidos
-----------------------------------------------------------
-
-SELECT
-
-o.or_id,
-
-u.us_name,
-
-p.p_name,
-
-o.or_quantity,
-
-o.or_total
-
-FROM orders o
-
-INNER JOIN users u
-
-ON u.us_id = o.us_id
-
-INNER JOIN product p
-
-ON p.p_id = o.p_id
-
-ORDER BY o.or_id;
-
-
-
-----------------------------------------------------------
--- Auditoria
-----------------------------------------------------------
-
-SELECT *
-
-FROM audit_product;
-
-
-
-----------------------------------------------------------
--- Estoque
-----------------------------------------------------------
-
-SELECT
-
-p_name,
-
-p_stock
-
-FROM product
-
-ORDER BY p_name;
-
-
-
-----------------------------------------------------------
--- Total de registros
-----------------------------------------------------------
-
-SELECT COUNT(*) AS administradores
-
-FROM admin;
-
-
-
-SELECT COUNT(*) AS usuarios
-
-FROM users;
-
-
-
-SELECT COUNT(*) AS produtos
-
-FROM product;
-
-
-
-SELECT COUNT(*) AS pedidos
-
-FROM orders;
-
-
-
-SELECT COUNT(*) AS contatos
-
-FROM contact;
-
-
-
-/*========================================================
-            FIM DOS TESTES
-========================================================*/
+-- erro
+        
+DELETE FROM users WHERE us_id = 1;
