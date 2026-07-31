@@ -1,15 +1,4 @@
-/*
-=========================================================
-PROJETO: LOJA VIRTUAL
-Disciplina: Banco de Dados
-SGBD: PostgreSQL
-Arquivo: 02_inserir_dados.sql
-=========================================================
-*/
-
--- ==========================================
--- INSERÇÃO DE ADMINISTRADORES
--- ==========================================
+-- admin
 
 INSERT INTO admin (ad_name, ad_password, ad_email, ad_phone) VALUES
 ('Carlos Silva', 'admin123', 'carlos@loja.com', '(83)99999-1001'),
@@ -18,10 +7,7 @@ INSERT INTO admin (ad_name, ad_password, ad_email, ad_phone) VALUES
 ('Ana Costa', 'admin321', 'ana@loja.com', '(83)99999-1004'),
 ('Lucas Lima', 'admin654', 'lucas@loja.com', '(83)99999-1005');
 
-
--- ==========================================
--- INSERÇÃO DE USUÁRIOS
--- ==========================================
+-- usuario
 
 INSERT INTO users (us_name, us_password, us_email, us_phone) VALUES
 ('Mateus Roseno', '123456', 'mateus@email.com', '(83)98888-2001'),
@@ -30,10 +16,7 @@ INSERT INTO users (us_name, us_password, us_email, us_phone) VALUES
 ('Camila Alves', 'camila321', 'camila@email.com', '(83)98888-2004'),
 ('Pedro Henrique', 'pedro987', 'pedro@email.com', '(83)98888-2005');
 
-
--- ==========================================
--- INSERÇÃO DE PRODUTOS
--- ==========================================
+-- produto
 
 INSERT INTO product
 (
@@ -57,10 +40,7 @@ VALUES
 
 ('Headset HyperX Cloud', 450.00, 'HS005', 18, 30, CURRENT_DATE, 5);
 
-
--- ==========================================
--- INSERÇÃO DE PEDIDOS
--- ==========================================
+-- pedido
 
 INSERT INTO orders
 (
@@ -82,10 +62,7 @@ VALUES
 
 (CURRENT_DATE,5,5,3,1350.00);
 
-
--- ==========================================
--- INSERÇÃO DE CONTATOS
--- ==========================================
+-- contato
 
 INSERT INTO contact
 (
@@ -143,10 +120,6 @@ VALUES
 5);
 
 
--- ==========================================
--- CONSULTAS PARA VERIFICAÇÃO
--- ==========================================
-
 SELECT * FROM admin;
 
 SELECT * FROM users;
@@ -157,10 +130,7 @@ SELECT * FROM orders;
 
 SELECT * FROM contact;
 
-
--- ==========================================
--- CONSULTA COM RELACIONAMENTO
--- ==========================================
+-- relaçoes
 
 SELECT
     o.or_id,
@@ -174,10 +144,7 @@ INNER JOIN users u
 INNER JOIN product p
     ON o.p_id = p.p_id;
 
-
--- ==========================================
--- CONSULTA DE ESTOQUE
--- ==========================================
+-- estoque
 
 SELECT
     p_name,
@@ -186,10 +153,7 @@ SELECT
 FROM product
 ORDER BY p_name;
 
-
--- ==========================================
--- TOTAL DE REGISTROS
--- ==========================================
+-- registros
 
 SELECT COUNT(*) AS total_admins
 FROM admin;
